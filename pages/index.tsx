@@ -1,10 +1,21 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import { BlogList } from '@/components/Common/Blog'
 import { PortfolioList } from '@/components/Common/Portfolio'
 import { BaseLayout } from '@/components/Layout'
+import { getBlogs } from '@/lib/blogs'
+import { type Blog } from '@/Interface/Blog'
+import PropTypes from 'prop-types'
 
-const Home: NextPage = () => {
+interface Props {
+  blogs: Blog[]
+}
+
+const Home: NextPage<Props> = ({ blogs }) => {
+  Home.propTypes = {
+    blogs: PropTypes.array.isRequired
+  }
+
   return (
         <BaseLayout>
             <h2
@@ -16,7 +27,7 @@ const Home: NextPage = () => {
                     </div>
                 </Link>
             </h2>
-            <BlogList />
+            <BlogList blogs={blogs} />
             <br></br>
             <h2
                 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -30,6 +41,15 @@ const Home: NextPage = () => {
             <PortfolioList />
         </BaseLayout>
   )
+}
+
+export const getStaticProps: GetStaticProps = () => {
+  const blogs = getBlogs()
+  console.log(blogs[0])
+
+  return {
+    props: { blogs }
+  }
 }
 
 export default Home

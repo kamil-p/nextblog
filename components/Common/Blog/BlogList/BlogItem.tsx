@@ -1,16 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { type FC } from 'react'
+import { type Blog } from '@/Interface/Blog'
 
-interface BlogItemType {
-  slug: string
-  title: string
-  description: string
-  date: string
-  coverImage: string
+interface Props {
+  blog: Blog
 }
 
-export const BlogItem: FC<BlogItemType> = (blog) => {
+export const BlogItem: FC<Props> = ({ blog }) => {
   return (
         <div key={blog.slug} className="group">
             <div className="h-80 aspect-w-1 aspect-h-1 w-full rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-40">
