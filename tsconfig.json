@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "sourceMap": true,
     "inlineSources": true,
     "target": "es5",

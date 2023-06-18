@@ -45,7 +45,6 @@ const Home: NextPage<Props> = ({ blogs }) => {
 
 export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs()
-  console.log(blogs[0])
 
   return {
     props: { blogs }
