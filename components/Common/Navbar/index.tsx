@@ -7,7 +7,7 @@ import { navigation } from '@/components/Common/Navbar/navigation'
 
 const Navbar: FC = () => {
   return (
-      <>
+      <div>
           <svg
               className="absolute inset-y-0 right-0 hidden h-full w-48 translate-x-1/2 transform text-white lg:block"
               fill="currentColor"
@@ -110,7 +110,7 @@ const Navbar: FC = () => {
                 </Popover.Panel>
             </Transition>
         </Popover>
-    </>
+    </div>
   )
 }
 
