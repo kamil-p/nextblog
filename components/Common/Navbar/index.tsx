@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { navigation } from '@/components/Common/Navbar/navigation'
+import ContentSearch from '@/components/Search/ContentSearch'
 
 const Navbar: FC = () => {
   return (
@@ -50,7 +51,7 @@ const Navbar: FC = () => {
                         ))}
                     </div>
                     <div className="hidden md:block">
-                        {/* Search Input Component */}
+                        <ContentSearch />
                     </div>
                 </nav>
             </div>
@@ -98,7 +99,7 @@ const Navbar: FC = () => {
                             ))}
                         </div>
                         <div className="px-4">
-                            {/* Search Input Component */}
+                            <ContentSearch />
                         </div>
                         <a
                             href="#"
