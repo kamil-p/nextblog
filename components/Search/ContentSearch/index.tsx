@@ -1,14 +1,34 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import { type ChangeEvent, type FC, useState } from 'react'
+import { type ChangeEvent, type FC, useEffect, useState } from 'react'
 import contentIndexer from '@/lib/client/ContentIndexer'
 import { type SearchContent } from '@/Interface/Markdown'
 
 const ContentSearch: FC = () => {
   const [results, setResults] = useState<SearchContent[]>([])
+
   const search = (event: ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target
     setResults(contentIndexer.search(value))
   }
+
+  const handleClickOutside = (): void => {
+    alert('click outside')
+  }
+
+  useEffect(() => {
+    const callback = (): void => {
+      if (results.length > 0) {
+        handleClickOutside()
+      }
+    }
+
+    document.addEventListener('click', callback)
+
+    // cleanup function
+    return () => {
+      document.removeEventListener('click', callback)
+    }
+  }, [results.length])
 
   return (
         <>
