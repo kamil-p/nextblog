@@ -1,23 +1,32 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid'
-import { type ChangeEvent, type FC, useEffect, useState } from 'react'
+import { type ChangeEvent, type FC, useEffect, useRef, useState } from 'react'
 import contentIndexer from '@/lib/client/ContentIndexer'
 import { type SearchContent } from '@/Interface/Markdown'
 
 const ContentSearch: FC = () => {
+  const ref = useRef<HTMLInputElement>(null)
   const [results, setResults] = useState<SearchContent[]>([])
+  const [query, setQuery] = useState<string>('')
 
   const search = (event: ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target
     setResults(contentIndexer.search(value))
+    setQuery(value)
   }
 
   const handleClickOutside = (): void => {
-    alert('click outside')
+    setResults([])
+    setQuery('')
   }
 
   useEffect(() => {
-    const callback = (): void => {
-      if (results.length > 0) {
+    const callback = (event: MouseEvent): void => {
+      if (
+        results.length > 0 &&
+          (ref.current != null) &&
+          // check if someone click outside search input
+          !ref.current.contains(event.target as Node)
+      ) {
         handleClickOutside()
       }
     }
@@ -40,6 +49,8 @@ const ContentSearch: FC = () => {
                     <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true"/>
                 </div>
                 <input
+                    ref={ref}
+                    value={query}
                     id="search-input"
                     autoComplete="off"
                     type="text"
