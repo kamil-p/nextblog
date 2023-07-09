@@ -31,11 +31,19 @@ const ContentSearch: FC = () => {
       }
     }
 
+    const escapeKeyCallback = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape' && results.length > 0) {
+        handleClickOutside()
+      }
+    }
+
     document.addEventListener('click', callback)
+    document.addEventListener('keydown', escapeKeyCallback)
 
     // cleanup function
     return () => {
       document.removeEventListener('click', callback)
+      document.removeEventListener('keydown', escapeKeyCallback)
     }
   }, [results.length])
 
