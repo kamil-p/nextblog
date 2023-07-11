@@ -2,7 +2,7 @@
 import { join } from 'path'
 import fs from 'fs'
 import matter from 'gray-matter'
-import { type MarkdownItem } from '@/Interface/Markdown'
+import { type MarkdownItem, type SearchContent } from '@/Interface/Markdown'
 import { type Blog } from '@/Interface/Blog'
 import { remark } from 'remark'
 import remarkHtml from 'remark-html'
@@ -33,10 +33,28 @@ const markdownToHtml = async (markdown: string): Promise<string> => {
   return result.toString()
 }
 
+const saveSearchData = (blogs: Blog[]): void => {
+  const searchFile = getDir('content/search/index.json')
+  const searchItemList: SearchContent[] = []
+
+  blogs.forEach((blog) => {
+    const searchItem: SearchContent = {
+      slug: blog.slug,
+      title: blog.title,
+      description: blog.description,
+      category: 'blogs'
+    }
+    searchItemList.push(searchItem)
+  })
+
+  fs.writeFileSync(searchFile, JSON.stringify(searchItemList, null, 2))
+}
+
 export {
   getDir,
   getFileNames,
   getItemInPath,
   getAllItems,
-  markdownToHtml
+  markdownToHtml,
+  saveSearchData
 }

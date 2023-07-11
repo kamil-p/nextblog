@@ -6,9 +6,7 @@ import { BaseLayout } from '@/components/Layout'
 import { getBlogs } from '@/lib/blogs'
 import { type Blog } from '@/Interface/Blog'
 import PropTypes from 'prop-types'
-import { getDir } from '@/lib/md'
-import { type SearchContent } from '@/Interface/Markdown'
-import fs from 'fs'
+import { saveSearchData } from '@/lib/md'
 
 interface Props {
   blogs: Blog[]
@@ -48,27 +46,7 @@ const Home: NextPage<Props> = ({ blogs }) => {
 
 export const getStaticProps: GetStaticProps = () => {
   const blogs = getBlogs()
-
-  // list files in directory
-  // const files = fs.readdirSync('content/search/index.json')
-  // console.log('Kamil---------')
-  // console.log(files)
-  // const searchFile = getDir('/content')
-  const searchFile = getDir('content/search/index.json')
-  const searchItemList: SearchContent[] = []
-
-  blogs.forEach((blog) => {
-    const searchItem: SearchContent = {
-      slug: blog.slug,
-      title: blog.title,
-      description: blog.description,
-      category: 'blogs'
-    }
-    searchItemList.push(searchItem)
-  })
-
-  fs.writeFileSync(searchFile, JSON.stringify(searchItemList, null, 2))
-
+  saveSearchData(blogs)
   return {
     props: { blogs }
   }
